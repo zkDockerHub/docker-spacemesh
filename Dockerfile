@@ -34,6 +34,6 @@ CMD ./go-spacemesh --config config.mainnet.json \
     --smeshing-opts-verifying-workers $POST_WORKERS \
     --smeshing-start \
     --smeshing-coinbase $SMESHING_COINBASE_ADDRESS \
-    --smeshing-opts-datadir ./post_data \
-    --data-folder ./node_data \
+    --smeshing-opts-datadir /app/go-spacemesh/post_data \
+    --data-folder /app/go-spacemesh/node_data \
     --metrics
