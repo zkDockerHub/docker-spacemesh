@@ -12,6 +12,7 @@ services:
       - ${NODEDATA_DIR:-./node_data}:/app/go-spacemesh/node_data
       - ${POSTDATA_DIR:-./post_data}:/app/go-spacemesh/post_data
     environment:
+      - TZ=Asia/Shanghai
       - SMESHING_COINBASE_ADDRESS=${SMESHING_COINBASE_ADDRESS:?please make sure to set your SMESHING_COINBASE_ADDRESS environment variable in the .env file}
       - FILE_SIZE=${FILE_SIZE:?please make sure to set your FILE_SIZE environment variable in the .env file}
       - NUMUNITS=${NUMUNITS:?please make sure to set your NUMUNITS environment variable in the .env file}

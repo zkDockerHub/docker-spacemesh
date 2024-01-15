@@ -23,7 +23,7 @@ This project is a Docker image that using the original project [go-spacemesh](ht
 To build `docker-spacemesh` for your current system architecture, from the project root directory, use:
 
 ```bash
-docker build . -t spacemesh --no-cache
+docker build . -t go-spacemesh:latest --no-cache
 ```
 
 ### Running
