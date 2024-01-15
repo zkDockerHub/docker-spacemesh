@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   spacemesh:
+    # image: eth2dev/go-spacemesh:v1.3.2
     image: 'go-spacemesh'
     container_name: 'gosm'
     build:
