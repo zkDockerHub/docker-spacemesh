@@ -17,12 +17,12 @@ COPY --from=builder /container/go-spacemesh/config.mainnet.json /app/go-spacemes
 COPY --from=builder /version.txt /app/go-spacemesh
 RUN apt update && apt install -y ocl-icd-libopencl1 ca-certificates && rm -rf /var/lib/apt/lists/*
 WORKDIR /app/go-spacemesh
-
 ADD https://github.com/fullstorydev/grpcurl/releases/download/v1.8.9/grpcurl_1.8.9_linux_x86_64.tar.gz /bin/
 RUN tar -zxvf /bin/grpcurl_1.8.9_linux_x86_64.tar.gz -C /bin/ \
     && rm /bin/grpcurl_1.8.9_linux_x86_64.tar.gz  \
     && echo "#! /bin/bash \n grpcurl -plaintext -d '' 0.0.0.0:9093 spacemesh.v1.AdminService.EventsStream" >> check.sh \
-    && chmod +x check.sh
+    && chmod +x check.sh \
+    && chmod -Rf 777 /app/go-spacemesh/node_data
 EXPOSE 7513
 CMD ./go-spacemesh --config config.mainnet.json \
     --smeshing-opts-provider $PROVIDER \
