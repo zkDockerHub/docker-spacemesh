@@ -9,13 +9,15 @@ RUN git clone --progress --verbose https://github.com/spacemeshos/go-spacemesh .
     && /bin/bash -c "git checkout $(cat /version.txt)" \
     && make get-libs && make install && make build \
     && chmod +x build/go-spacemesh
+RUN wget https://configs.spacemesh.network/config.mainnet.json
 
 FROM ubuntu:22.04
 COPY --from=builder /container/go-spacemesh/build /app/go-spacemesh
+COPY --from=builder /container/go-spacemesh/config.mainnet.json /app/go-spacemesh
 COPY --from=builder /version.txt /app/go-spacemesh
 RUN apt update && apt install -y ocl-icd-libopencl1 ca-certificates && rm -rf /var/lib/apt/lists/*
 WORKDIR /app/go-spacemesh
-RUN wget https://configs.spacemesh.network/config.mainnet.json
+
 ADD https://github.com/fullstorydev/grpcurl/releases/download/v1.8.9/grpcurl_1.8.9_linux_x86_64.tar.gz /bin/
 RUN tar -zxvf /bin/grpcurl_1.8.9_linux_x86_64.tar.gz -C /bin/ \
     && rm /bin/grpcurl_1.8.9_linux_x86_64.tar.gz  \
@@ -29,7 +31,6 @@ CMD ./go-spacemesh --config config.mainnet.json \
     --smeshing-opts-proving-nonces $NONCES \
     --smeshing-opts-proving-threads $THREADS \
     --smeshing-opts-verifying-min-workers $POST_MIN_WORKERS \
-    --smeshing-opts-verifying-powflags $POST_POW_FLAGS \
     --smeshing-opts-verifying-workers $POST_WORKERS \
     --smeshing-start \
     --smeshing-coinbase $SMESHING_COINBASE_ADDRESS \

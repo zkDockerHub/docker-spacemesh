@@ -1,14 +1,15 @@
 version: '3.8'
 services:
   spacemesh:
-    container_name: 'go-spacemesh'
+    image: 'go-spacemesh'
+    container_name: 'gosm'
     build:
       context: .
     networks:
-      - spacemesh
+      - gosm_network
     privileged: true
     volumes:
-      - ${POSTDATA_DIR:-./node_data}:/app/go-spacemesh/node_data
+      - ${NODEDATA_DIR:-./node_data}:/app/go-spacemesh/node_data
       - ${POSTDATA_DIR:-./post_data}:/app/go-spacemesh/post_data
     environment:
       - SMESHING_COINBASE_ADDRESS=${SMESHING_COINBASE_ADDRESS:?please make sure to set your SMESHING_COINBASE_ADDRESS environment variable in the .env file}
@@ -19,8 +20,7 @@ services:
       - THREADS=${THREADS:?please make sure to set your THREADS environment variable in the .env file}
       - POST_MIN_WORKERS=${POST_MIN_WORKERS:?please make sure to set your POST_MIN_WORKERS environment variable in the .env file}
       - POST_WORKERS=${POST_WORKERS:?please make sure to set your POST_WORKERS environment variable in the .env file}
-      - POST_POW_FLAGS=${POST_POW_FLAGS:?please make sure to set your POST_POW_FLAGS environment variable in the .env file}
     restart: unless-stopped
 
 networks:
-  spacemesh:
+  gosm_network:
